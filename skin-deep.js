@@ -1,31 +1,10 @@
 var subset = require('is-subset');
-
 var React = require('react');
-var React013 = (React.version.substring(0, 4) == '0.13');
-
-var TestUtils;
-if (React013) {
-  TestUtils = require('react/addons').addons.TestUtils;
-} else {
-  TestUtils = require('react-addons-test-utils');
-}
-
-function renderToStaticMarkup(element) {
-  if (React013) {
-    return React.renderToStaticMarkup(element);
-  }
-
-  return require("react-dom/server").renderToStaticMarkup(element);
-}
+var TestUtils = require('react-addons-test-utils');
+var renderToStaticMarkup = require("react-dom/server").renderToStaticMarkup;
 
 function withContext(context, fn) {
-  if (!React013) return fn();
-
-  var ReactContext = require('react/lib/ReactContext');
-  ReactContext.current = context;
-  var result = fn();
-  ReactContext.current = {};
-  return result;
+  return fn();
 }
 
 exports.shallowRender = shallowRender;
